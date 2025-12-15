@@ -141,9 +141,9 @@ STATICFILES_DIRS = [
 # MEDIA FILES
 # -------------------------------------------------------------------
 CLOUDINARY_STORAGE = {
-    "CLOUD_NAME": os.environ.get("CLOUDINARY_CLOUD_NAME"),
-    "API_KEY": os.environ.get("CLOUDINARY_API_KEY"),
-    "API_SECRET": os.environ.get("CLOUDINARY_API_SECRET"),
+    "CLOUD_NAME": os.environ.get("dwqjxlwc8"),
+    "API_KEY": os.environ.get("765853856543154"),
+    "API_SECRET": os.environ.get("DnENQU3JHhSjBM7kqNcyyHTaQgE"),
 }
 
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"

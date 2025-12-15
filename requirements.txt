@@ -2,3 +2,5 @@ Django
 djangorestframework
 gunicorn
 whitenoise
+cloudinary 
+django-cloudinary-storage

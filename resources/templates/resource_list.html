@@ -5,40 +5,73 @@
 <h2 class="page-title mb-3">📁 All Resources</h2>
 
 <div class="custom-card">
+
 <table class="table table-hover align-middle">
   <thead>
     <tr>
       <th>Title</th>
       <th>Description</th>
       <th>Uploaded By</th>
-      <th>Download</th>
-      {% if user.role == "lecturer" %}<th>Actions</th>{% endif %}
+      <th>Open / Download</th>
+      {% if user.role == "lecturer" %}
+      <th>Actions</th>
+      {% endif %}
     </tr>
   </thead>
+
   <tbody>
     {% for r in resources %}
     <tr>
       <td class="fw-bold">{{ r.title }}</td>
       <td>{{ r.description|default:"—" }}</td>
       <td>{{ r.uploaded_by.username }}</td>
+
+      <!-- 🔥 OPEN + DOWNLOAD -->
       <td>
-        <a href="{{ r.file.url }}" download class="btn btn-outline-primary btn-sm">
-          Download
+        <!-- OPEN FILE -->
+        <a href="{{ r.file.url }}"
+           target="_blank"
+           class="btn btn-outline-success btn-sm me-1">
+           👁 View
+        </a>
+
+        <!-- DOWNLOAD FILE -->
+        <a href="{{ r.file.url }}"
+           download
+           class="btn btn-outline-primary btn-sm">
+           ⬇ Download
         </a>
       </td>
 
       {% if user.role == "lecturer" %}
       <td>
         {% if r.uploaded_by == user %}
-        <a href="{% url 'resource_edit' r.pk %}" class="btn btn-warning btn-sm">Edit</a>
-        <a href="{% url 'resource_delete' r.pk %}" class="btn btn-danger btn-sm">Delete</a>
+        <a href="{% url 'resource_edit' r.pk %}"
+           class="btn btn-warning btn-sm me-1">
+           Edit
+        </a>
+
+        <a href="{% url 'resource_delete' r.pk %}"
+           class="btn btn-danger btn-sm">
+           Delete
+        </a>
+        {% else %}
+        <span class="text-muted">Not Owner</span>
         {% endif %}
       </td>
       {% endif %}
+
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan="5" class="text-center text-muted">
+        No resources uploaded yet.
+      </td>
     </tr>
     {% endfor %}
   </tbody>
 </table>
+
 </div>
 
 {% endblock %}

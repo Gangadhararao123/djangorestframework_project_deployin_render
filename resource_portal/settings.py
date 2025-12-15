@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Third-party
     "rest_framework",
-
+    "cloudinary",
+    "cloudinary_storage",
     # Local apps
     "resources",
 ]
@@ -139,8 +140,13 @@ STATICFILES_DIRS = [
 # -------------------------------------------------------------------
 # MEDIA FILES
 # -------------------------------------------------------------------
-MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
+CLOUDINARY_STORAGE = {
+    "CLOUD_NAME": os.environ.get("CLOUDINARY_CLOUD_NAME"),
+    "API_KEY": os.environ.get("CLOUDINARY_API_KEY"),
+    "API_SECRET": os.environ.get("CLOUDINARY_API_SECRET"),
+}
+
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 
 # -------------------------------------------------------------------
@@ -153,17 +159,35 @@ LOGIN_REDIRECT_URL = "resource_list"
 LOGOUT_REDIRECT_URL = "login"
 
 
-# -------------------------------------------------------------------
-# DEFAULT PRIMARY KEY
-# -------------------------------------------------------------------
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+# --------------------------------------------------
+# REST FRAMEWORK
+# --------------------------------------------------
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticatedOrReadOnly",
+    ],
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.BasicAuthentication",
+    ],
+}
 
+# --------------------------------------------------
+# SECURITY (PRODUCTION SAFE)
+# --------------------------------------------------
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.onrender.com",
+]
 
-# -------------------------------------------------------------------
-# SECURITY (RECOMMENDED FOR PRODUCTION)
-# -------------------------------------------------------------------
 CSRF_COOKIE_SECURE = not DEBUG
 SESSION_COOKIE_SECURE = not DEBUG
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = "DENY"
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+# --------------------------------------------------
+# DEFAULT PRIMARY KEY
+# --------------------------------------------------
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="row justify-content-center">
+  <div class="col-md-7">
+    <div class="form-container">
+
+      <h2 class="page-title text-center mb-4">📤 Upload Resource</h2>
+
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label class="form-label fw-bold">Title</label>
+          {{ form.title }}
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-bold">Description</label>
+          {{ form.description }}
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-bold">File</label>
+          {{ form.file }}
+        </div>
+        <button class="btn btn-success w-100">Upload</button>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="row justify-content-center">
+  <div class="col-md-5">
+    <div class="form-container">
+
+      <h2 class="page-title text-center mb-4">🔐 Login</h2>
+
+      <form method="post">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+        <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+        {% endif %}
+
+        <div class="mb-3">
+          <label class="form-label fw-bold">Username</label>
+          {{ form.username }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-bold">Password</label>
+          {{ form.password }}
+        </div>
+
+        <button class="btn btn-primary w-100">Login</button>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

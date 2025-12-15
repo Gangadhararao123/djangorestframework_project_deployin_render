@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: resource-portal
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn resource_portal.wsgi:application"
+    envVars:
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DJANGO_DEBUG
+        value: false

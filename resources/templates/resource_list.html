@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<h2 class="page-title mb-3">📁 All Resources</h2>
+
+<div class="custom-card">
+<table class="table table-hover align-middle">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Uploaded By</th>
+      <th>Download</th>
+      {% if user.role == "lecturer" %}<th>Actions</th>{% endif %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for r in resources %}
+    <tr>
+      <td class="fw-bold">{{ r.title }}</td>
+      <td>{{ r.description|default:"—" }}</td>
+      <td>{{ r.uploaded_by.username }}</td>
+      <td>
+        <a href="{{ r.file.url }}" download class="btn btn-outline-primary btn-sm">
+          Download
+        </a>
+      </td>
+
+      {% if user.role == "lecturer" %}
+      <td>
+        {% if r.uploaded_by == user %}
+        <a href="{% url 'resource_edit' r.pk %}" class="btn btn-warning btn-sm">Edit</a>
+        <a href="{% url 'resource_delete' r.pk %}" class="btn btn-danger btn-sm">Delete</a>
+        {% endif %}
+      </td>
+      {% endif %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="custom-card text-center">
+
+      <h2 class="text-danger">⚠ Delete Resource</h2>
+      <p class="fs-5 mt-3">Are you sure you want to delete:</p>
+      <h4 class="fw-bold">{{ resource.title }}</h4>
+
+      <form method="post" class="mt-4">
+        {% csrf_token %}
+        <button class="btn btn-danger">Yes, Delete</button>
+        <a href="{% url 'resource_list' %}" class="btn btn-secondary">Cancel</a>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
